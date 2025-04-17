@@ -13,4 +13,4 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-      - run: java InTheWallsApp.java
+      - run: javac -d out InTheWallsApp.java
