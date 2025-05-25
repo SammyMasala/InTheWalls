@@ -8,9 +8,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Build project
+
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
-      - run: javac -d out InTheWallsApp.java
+
+      - name: Compile files
+        run: | 
+          mkdir -p out
+          javac -d out src/main/Main.java
+
+#      - name: Export JAR artifact
+#        uses: action/upload-artifact@v4
+#        with:
+#          name: InTheWalls-${}-jar
+#          path: dist/
