@@ -16,7 +16,7 @@ jobs:
           java-version: '21'
 
       - name: Compile files
-        run: javac -d out src/main/Main.java
+        run: javac -d out src/main/*.java
 
 #      - name: Export JAR artifact
 #        uses: action/upload-artifact@v4
