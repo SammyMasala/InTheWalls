@@ -16,7 +16,9 @@ jobs:
           java-version: '21'
 
       - name: Compile files
-        run: javac -d out src/main/*.java
+        run: | 
+          find src -name "*.java" > sources.txt
+          javac -d out @sources.txt
 
 #      - name: Export JAR artifact
 #        uses: action/upload-artifact@v4
