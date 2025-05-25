@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/InTheWalls.iml" filepath="$PROJECT_DIR$/InTheWalls.iml" />
+      <module fileurl="file://$PROJECT_DIR$/in-the-walls.iml" filepath="$PROJECT_DIR$/in-the-walls.iml" />
     </modules>
   </component>
 </project>
