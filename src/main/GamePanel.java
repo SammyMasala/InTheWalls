@@ -1,5 +1,6 @@
 package main;
 
+import entity.Bug;
 import entity.Player;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ public class GamePanel extends JPanel implements Runnable{
     final int scale = 3;
 
     public final int tileSize = scale * baseTileSize;
-    final int maxScreenCol = 16;
+    final int maxScreenCol = 17;
     final int maxScreenRow = 10;
 
     final int screenWidth = tileSize*maxScreenCol;
@@ -21,6 +22,7 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
     KeyHandler keyH = new KeyHandler();
     Player player = new Player(this, keyH);
+    Bug bug = new Bug(this, 1, true);
 
 
     public GamePanel(){
@@ -59,7 +61,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update(){
         this.player.update();
-
+        this.bug.update();
     }
 
     public void paintComponent(Graphics g){
@@ -67,6 +69,7 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
 
         this.player.draw(g2);
+        this.bug.draw(g2);
 
         g2.dispose();
     }

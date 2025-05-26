@@ -8,11 +8,13 @@ import java.awt.*;
 public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
+    int playerX;
+    int playerY;
 
-    int playerX = 100;
-    int playerY = 100;
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
+        this.playerX = 8 * gp.tileSize;
+        this.playerY = 4 * gp.tileSize;
         this.keyH = keyH;
     }
 
