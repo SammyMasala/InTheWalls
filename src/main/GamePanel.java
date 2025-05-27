@@ -1,6 +1,7 @@
 package main;
 
-import entity.Bug;
+import controller.AIController;
+import entity.Base;
 import entity.Player;
 
 import javax.swing.*;
@@ -20,10 +21,12 @@ public class GamePanel extends JPanel implements Runnable{
     final int FPS = 60;
 
     Thread gameThread;
-    KeyHandler keyH = new KeyHandler();
-    Player player = new Player(this, keyH);
-    Bug bug = new Bug(this, 1, true);
 
+//    Game initialization
+    KeyHandler keyH = new KeyHandler();
+    Player player = new Player(this, keyH, 8 * tileSize, 4 * tileSize);
+    final public Base base = new Base(this, 7 * tileSize, 10 * tileSize);
+    AIController aiController = new AIController(this, base);
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -61,7 +64,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update(){
         this.player.update();
-        this.bug.update();
+        this.aiController.next();
     }
 
     public void paintComponent(Graphics g){
@@ -69,7 +72,7 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
 
         this.player.draw(g2);
-        this.bug.draw(g2);
+        this.aiController.draw(g2);
 
         g2.dispose();
     }

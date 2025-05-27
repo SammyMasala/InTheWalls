@@ -11,26 +11,22 @@ public class Player extends Entity{
     int playerX;
     int playerY;
 
-    public Player(GamePanel gp, KeyHandler keyH){
+    public Player(GamePanel gp, KeyHandler keyH, int playerX, int playerY){
         this.gp = gp;
-        this.playerX = 8 * gp.tileSize;
-        this.playerY = 4 * gp.tileSize;
+        this.playerX = playerX;
+        this.playerY = playerY;
         this.keyH = keyH;
     }
 
+    @Override
     public void update(){
-        if(keyH.upPressed){
+        if(keyH.upPressed && playerY/gp.tileSize >= 5){
             playerY -= gp.tileSize;
             keyH.upPressed = false;
-            if(playerY < 0){
-                playerY = 0;
-            }
-        }else if (keyH.downPressed){
+
+        }else if (keyH.downPressed && playerY/gp.tileSize <= 5){
             playerY += gp.tileSize;
             keyH.downPressed = false;
-            if(playerY > 300){
-                playerY = 300;
-            }
         }
 
     }
