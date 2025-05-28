@@ -1,7 +1,6 @@
 package entity;
 
-import level.Lane;
-import level.LevelHandler;
+import main.LevelHandler;
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -42,10 +41,6 @@ public class Player extends Entity{
 
     public void setPlayerY(int playerY){
         this.playerY = playerY;
-    }
-
-    public int getPlayerY(){
-        return this.playerY;
     }
 
     public void draw(Graphics2D g2){

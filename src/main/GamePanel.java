@@ -1,8 +1,6 @@
 package main;
 
-import entity.Base;
 import entity.Player;
-import level.LevelHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +25,6 @@ public class GamePanel extends JPanel implements Runnable{
     final LevelHandler levelH = new LevelHandler(this,3);
 
     final Player player = new Player(this, levelH, keyH, 8, 1);
-    final Base base = new Base(this, 7 * tileSize, 10 * tileSize);
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -69,8 +66,8 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
-    public Base getBase(){
-        return this.base;
+    public void endGame(){
+        this.gameThread = null;
     }
 
     public void update(){

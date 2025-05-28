@@ -1,7 +1,8 @@
-package level;
+package main;
 
+import entity.Base;
 import entity.Player;
-import main.GamePanel;
+import level.Lane;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,14 +11,19 @@ import java.util.Random;
 public class LevelHandler {
     GamePanel gp;
     Player player;
+    Base base;
+
     ArrayList<ArrayList<Lane>> lanes;
     Random rand = new Random();
+    int baseHealth;
     int currentPlayerY;
     int interval;
 
     public LevelHandler(GamePanel gp, int floorNum){
         this.gp = gp;
-        lanes = new ArrayList<>();
+        this.base = new Base(this.gp, 7 *gp.tileSize, 10 * gp.tileSize);
+        this.lanes = new ArrayList<>();
+        this.baseHealth = 20;
         init(floorNum);
     }
 
@@ -39,13 +45,19 @@ public class LevelHandler {
         currentPlayerY = 1;
         for (int i = 0;i<floorNum;i++){
             lanes.add(new ArrayList<>());
-            lanes.get(i).add(new Lane(gp, this, i, 0));
-            lanes.get(i).add(new Lane(gp, this, i, 1));
+            lanes.get(i).add(new Lane(gp, this.base, this, i, 0));
+            lanes.get(i).add(new Lane(gp, this.base, this, i, 1));
         }
     }
 
     public void damageBug(int direction){
         lanes.get(currentPlayerY).get(direction).dealDamage();
+    }
+    public void damageBase(int damage){
+        this.baseHealth -= damage;
+        if(baseHealth <= 0){
+            baseHealth = 0;
+        }
     }
 
     public void createBug(){
@@ -56,6 +68,10 @@ public class LevelHandler {
 
     public void update(){
         interval++;
+        if(this.baseHealth <= 0){
+            gp.endGame();
+        }
+
         this.player.update();
         for (ArrayList<Lane> lanes : lanes) {
             for (Lane lane : lanes) {

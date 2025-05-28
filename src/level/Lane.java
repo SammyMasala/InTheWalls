@@ -1,7 +1,9 @@
 package level;
 
+import entity.Base;
 import entity.Bug;
 import main.GamePanel;
+import main.LevelHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,21 +13,22 @@ import java.util.Iterator;
 public class Lane {
     GamePanel gp;
     ArrayList<Bug> bugs;
+    Base base;
     LevelHandler levelHandler;
     int laneY;
     int direction;
 
-    public Lane(GamePanel gp, LevelHandler levelHandler, int laneY, int direction){
+    public Lane(GamePanel gp, Base base, LevelHandler levelHandler, int laneY, int direction){
         this.gp = gp;
         this.levelHandler = levelHandler;
+        this.base = base;
         this.bugs = new ArrayList<>();
-
         this.laneY = laneY;
         this.direction = direction;
     }
 
     public void addBug(){
-        bugs.add(new Bug(gp, laneY, 1, this.direction));
+        bugs.add(new Bug(gp, laneY, this.base, 1, this.direction));
     }
 
     public void update(){
@@ -33,6 +36,9 @@ public class Lane {
         while(it.hasNext()){
             Bug bug = it.next();
             if(bug.getIsDead()){
+                if(bug.getReachedBase()){
+                    this.levelHandler.damageBase(1);
+                }
                 it.remove();
             }else{
                 bug.update();

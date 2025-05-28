@@ -11,16 +11,18 @@ public class Bug extends Entity{
     int bugX;
     int bugY;
     int direction;
+    boolean reachedBase;
     boolean isDead;
     int speed;
 
-    public Bug(GamePanel gp, int bugY, int speed, int direction) {
+    public Bug(GamePanel gp, int bugY, Base base, int speed, int direction) {
         this.gp = gp;
         this.bugY = bugY;
-        this.base = gp.getBase();
+        this.base = base;
         this.speed = speed;
         this.direction = direction;
         this.isDead = false;
+        this.reachedBase = false;
 
         if(direction == 0){
             this.bugX = 0;
@@ -32,23 +34,26 @@ public class Bug extends Entity{
     @Override
     public void update(){
         if(direction == 0){
-            bugX += speed;
+            this.bugX += speed;
         }else {
-            bugX -= speed;
+            this.bugX -= speed;
         }
 
-        if (reachedBase()){
+        this.reachedBase = CollisionChecker.checkCollision1D(
+                this.base.baseLeftX,
+                this.base.baseRightX,
+                bugX,
+                bugX + gp.tileSize
+        );
+
+        if (this.reachedBase){
             isDead = true;
         }
     }
 
-    boolean reachedBase(){
-        return CollisionChecker.checkCollision1D(base.baseLeftX,  base.baseRightX, bugX, bugX + gp.tileSize);
-    }
-
     public void draw(Graphics2D g2){
         g2.setColor(Color.BLUE);
-        g2.fillRect(bugX, bugY*gp.tileSize, gp.tileSize, gp.tileSize);
+        g2.fillRect(this.bugX, this.bugY*gp.tileSize, this.gp.tileSize, this.gp.tileSize);
     }
 
     public void setIsDead(boolean isDead){
@@ -57,6 +62,10 @@ public class Bug extends Entity{
 
     public boolean getIsDead(){
         return this.isDead;
+    }
+
+    public boolean getReachedBase(){
+        return this.reachedBase;
     }
 
     public int getX(){
