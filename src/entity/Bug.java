@@ -1,6 +1,5 @@
 package entity;
 
-import controller.AIController;
 import main.GamePanel;
 import utils.CollisionChecker;
 
@@ -8,19 +7,17 @@ import java.awt.*;
 
 public class Bug extends Entity{
     GamePanel gp;
-    AIController aiController;
     Base base;
     int bugX;
     int bugY;
     int direction;
-    public boolean isDead;
+    boolean isDead;
     int speed;
 
-    public Bug(GamePanel gp, AIController aiController, int bugY, int speed, int direction) {
+    public Bug(GamePanel gp, int bugY, int speed, int direction) {
         this.gp = gp;
-        this.aiController = aiController;
-        this.bugY = bugY * gp.tileSize;
-        this.base = gp.base;
+        this.bugY = bugY;
+        this.base = gp.getBase();
         this.speed = speed;
         this.direction = direction;
         this.isDead = false;
@@ -46,12 +43,23 @@ public class Bug extends Entity{
     }
 
     boolean reachedBase(){
-
         return CollisionChecker.checkCollision1D(base.baseLeftX,  base.baseRightX, bugX, bugX + gp.tileSize);
     }
 
     public void draw(Graphics2D g2){
         g2.setColor(Color.BLUE);
-        g2.fillRect(bugX, bugY, gp.tileSize, gp.tileSize);
+        g2.fillRect(bugX, bugY*gp.tileSize, gp.tileSize, gp.tileSize);
+    }
+
+    public void setIsDead(boolean isDead){
+        this.isDead = isDead;
+    }
+
+    public boolean getIsDead(){
+        return this.isDead;
+    }
+
+    public int getX(){
+        return this.bugX;
     }
 }

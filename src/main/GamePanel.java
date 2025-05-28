@@ -1,8 +1,8 @@
 package main;
 
-import controller.AIController;
 import entity.Base;
 import entity.Player;
+import level.LevelHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public final int tileSize = scale * baseTileSize;
     final int maxScreenCol = 17;
-    final int maxScreenRow = 10;
+    final int maxScreenRow = 3;
 
     final int screenWidth = tileSize*maxScreenCol;
     final int screenHeight = tileSize*maxScreenRow;
@@ -23,10 +23,11 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
 
 //    Game initialization
-    KeyHandler keyH = new KeyHandler();
-    Player player = new Player(this, keyH, 8 * tileSize, 4 * tileSize);
-    final public Base base = new Base(this, 7 * tileSize, 10 * tileSize);
-    AIController aiController = new AIController(this, base);
+    final KeyHandler keyH = new KeyHandler();
+    final LevelHandler levelH = new LevelHandler(this,3);
+
+    final Player player = new Player(this, levelH, keyH, 8, 1);
+    final Base base = new Base(this, 7 * tileSize, 10 * tileSize);
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -34,6 +35,12 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+
+        init();
+    }
+
+    void init(){
+        this.levelH.setPlayer(this.player);
     }
 
     public void startGameThread(){
@@ -62,18 +69,18 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
+    public Base getBase(){
+        return this.base;
+    }
+
     public void update(){
-        this.player.update();
-        this.aiController.next();
+        this.levelH.update();
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-
-        this.player.draw(g2);
-        this.aiController.draw(g2);
-
+        this.levelH.drawEntities(g2);
         g2.dispose();
     }
 }
