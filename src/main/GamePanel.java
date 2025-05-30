@@ -11,7 +11,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public final int tileSize = scale * baseTileSize;
     final int maxScreenCol = 17;
-    final int maxScreenRow = 3;
+    final int maxScreenRow = 5;
 
     final int screenWidth = tileSize*maxScreenCol;
     final int screenHeight = tileSize*maxScreenRow;
@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements Runnable{
 //    Game initialization
     final KeyHandler keyH = new KeyHandler();
     final LevelHandler levelH = new LevelHandler(this,3);
+    final UIHandler uiH = new UIHandler(this, this.levelH);
 
     final Player player = new Player(this, levelH, keyH, 8, 1);
 
@@ -72,12 +73,14 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update(){
         this.levelH.update();
+        this.uiH.update();
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         this.levelH.drawEntities(g2);
+        this.uiH.draw(g2);
         g2.dispose();
     }
 }

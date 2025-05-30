@@ -45,8 +45,8 @@ public class LevelHandler {
         currentPlayerY = 1;
         for (int i = 0;i<floorNum;i++){
             lanes.add(new ArrayList<>());
-            lanes.get(i).add(new Lane(gp, this.base, this, i, 0));
-            lanes.get(i).add(new Lane(gp, this.base, this, i, 1));
+            lanes.get(i).add(new Lane(gp, this.base, this, i+1, 0));
+            lanes.get(i).add(new Lane(gp, this.base, this, i+1, 1));
         }
     }
 
@@ -58,6 +58,10 @@ public class LevelHandler {
         if(baseHealth <= 0){
             baseHealth = 0;
         }
+    }
+
+    public int getBaseHealth(){
+        return Math.max(0, this.baseHealth);
     }
 
     public void createBug(){

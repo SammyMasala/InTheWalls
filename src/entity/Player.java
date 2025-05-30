@@ -45,6 +45,6 @@ public class Player extends Entity{
 
     public void draw(Graphics2D g2){
         g2.setColor(Color.white);
-        g2.fillRect(playerX * gp.tileSize,playerY * gp.tileSize, gp.tileSize, gp.tileSize);
+        g2.fillRect(playerX * gp.tileSize,(playerY + 1) * gp.tileSize, gp.tileSize, gp.tileSize);
     }
 }
