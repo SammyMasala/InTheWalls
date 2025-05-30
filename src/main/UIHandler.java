@@ -13,14 +13,12 @@ public class UIHandler {
     PauseOverlay pauseO;
     PlayOverlay playO;
 
-    int gameState;
-
-    public UIHandler(GamePanel gp, LevelHandler levelH){
+        public UIHandler(GamePanel gp, LevelHandler levelH){
         this.gp = gp;
         this.levelH = levelH;
 
-        this.goO = new GameOverOverlay(levelH);
-        this.pauseO = new PauseOverlay(levelH);
+        this.goO = new GameOverOverlay(gp, levelH);
+        this.pauseO = new PauseOverlay(gp, levelH);
         this.playO = new PlayOverlay(gp, levelH);
 
     }
@@ -28,12 +26,8 @@ public class UIHandler {
 
     }
 
-    public void setGameState(int gameState){
-        this.gameState = gameState;
-    }
-
     public void draw(Graphics2D g2){
-        switch(this.gameState){
+        switch(this.gp.getGameState()){
             case 0:
                 this.playO.draw(g2);
                 break;

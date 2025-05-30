@@ -71,12 +71,14 @@ public class LevelHandler {
     }
 
     public void update(){
+        if(this.gp.getGameState() != 0){
+            return;
+        }
         interval++;
         if(this.baseHealth <= 0){
             gp.endGame();
         }
 
-        this.player.update();
         for (ArrayList<Lane> lanes : lanes) {
             for (Lane lane : lanes) {
                 lane.update();
@@ -89,7 +91,11 @@ public class LevelHandler {
     }
 
     public void drawEntities(Graphics2D g2){
-        this.player.draw(g2);
+        if (this.gp.getGameState() != 0) {
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+        }else{
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+        }
         for (ArrayList<Lane> lanes : lanes) {
             for (Lane lane : lanes) {
                 lane.draw(g2);
